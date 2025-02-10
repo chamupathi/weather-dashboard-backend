@@ -3,6 +3,8 @@ import axios from "axios";
 import constants from "../constants/constants.json";
 import { OWWeatherResponseSchema } from "../schemas/external/open-weather/weather";
 import { OWForecastResponseSchema } from "../schemas/external/open-weather/forecast";
+import { OpenWeatherWeatherResponse } from "../models/external/open-weather/weather";
+import { OpenWeatherForecastResponse } from "../models/external/open-weather/forecast";
 
 
 export class WeatherService {
@@ -17,7 +19,7 @@ export class WeatherService {
     }
 
 
-    async getWeatherByCity(city: string) {
+    async getWeatherByCity(city: string): Promise<OpenWeatherWeatherResponse> {
         const res = await axios.get(`${constants.openWeather.baseUrl}/weather`, {
             params: {
                 q: city,
@@ -31,7 +33,7 @@ export class WeatherService {
         return validateData
     }
 
-    async getForecastByCity(city: string, days: number) {
+    async getForecastByCity(city: string, days: number):Promise<OpenWeatherForecastResponse> {
 
         // Calculate count (8 data points per day as API returns 3-hour intervals)
         const count = days * 8;
