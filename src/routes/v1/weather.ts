@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request, Router } from "express";
 import { WeatherService } from "../../services/weather-service";
 import { ForecastQuerySchema } from "../../schemas/internal/forecast";
+import { transformForecastData } from "../../utils/forecast-transformer";
 
 const router = Router()
 const weatherService = new WeatherService()
@@ -23,7 +24,8 @@ router.get("/:city/forecasts", async (req: Request, res: Response, next: NextFun
         const { days } = ForecastQuerySchema.parse({ days: req.query.days })
 
         const forecast = await weatherService.getForecastByCity(city, days)
-        res.json(forecast);
+        const dailyForecasts = transformForecastData(forecast, days);
+        res.json(dailyForecasts);
     } catch (error) {
         next(error)
     }
