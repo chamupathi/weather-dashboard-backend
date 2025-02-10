@@ -1,5 +1,6 @@
 import express from 'express';
 import weatherRouter from './routes/v1/weather';
+import { errorHandler } from './middleware/error-handler';
 
 export const createApp = () => {
     const app = express()
@@ -9,6 +10,8 @@ export const createApp = () => {
     })
 
     app.use('/v1/weather', weatherRouter)
+
+    app.use(errorHandler)
 
     return app;
 }
