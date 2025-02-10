@@ -1,6 +1,9 @@
 import axios from "axios";
 
 import constants from "../constants/constants.json";
+import { OWWeatherResponseSchema } from "../schemas/external/open-weather/weather";
+import { OWForecastResponseSchema } from "../schemas/external/open-weather/forecast";
+
 
 export class WeatherService {
     private readonly apiKey: string;
@@ -23,7 +26,9 @@ export class WeatherService {
             }
         })
 
-        return res.data
+        const validateData = OWWeatherResponseSchema.parse(res.data)
+
+        return validateData
     }
 
     async getForecastByCity(city: string, days: number) {
@@ -40,6 +45,8 @@ export class WeatherService {
             }
         })
 
-        return res.data
+        const validateData = OWForecastResponseSchema.parse(res.data)
+
+        return validateData
     }
 }
