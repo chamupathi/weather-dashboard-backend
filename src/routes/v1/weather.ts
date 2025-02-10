@@ -9,7 +9,7 @@ const weatherService = new WeatherService()
 router.get("/:city", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { city } = req.params;
-        
+
         const weather = await weatherService.getWeatherByCity(city)
 
         res.json(weather);
@@ -19,7 +19,7 @@ router.get("/:city", async (req: Request, res: Response, next: NextFunction) => 
 
 })
 
-router.get("/:city/forecasts", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:city/forecast", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { city } = req.params;
 
