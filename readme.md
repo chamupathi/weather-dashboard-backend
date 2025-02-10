@@ -81,3 +81,48 @@ npm run test:coverage
 - Rate limiting
 - Security headers
 ```
+
+## Architecture Overview
+
+### Technology Stack
+
+#### Frontend
+- **Next.js**: Chosen for its powerful features including:
+  - Server-side rendering capabilities
+  - Built-in routing
+  - Optimized performance
+  - TypeScript support
+  - Easy deployment
+
+#### Backend
+- **Express.js**: Selected as the backend framework to:
+  - Provide a standalone API service
+  - Enable future extensibility (e.g., mobile app backend)
+  - Handle API routing and middleware effectively
+  - Support TypeScript for type safety
+
+### Key Architectural Decisions
+
+#### Service Layer Pattern
+- External API communications (OpenWeather) are abstracted into service classes
+- Benefits:
+  - Separation of concerns
+  - Easier testing through mocking
+  - Centralized API configuration
+  - Simplified error handling
+  - Easy to swap external providers if needed
+
+#### API Versioning
+- Routes are versioned (e.g., `/api/v1/weather`)
+- Ensures:
+  - Backward compatibility
+  - Future API evolution without breaking existing clients
+  - Clear documentation and maintenance
+
+#### Error Handling
+- Centralized error handling using custom error classes
+- Consistent error responses across the application
+- Types of errors:
+  - `AppError`: Base error class for application-specific errors
+  - HTTP status codes mapped to appropriate error responses
+  - Validation errors with detailed feedback
